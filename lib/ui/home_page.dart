@@ -49,9 +49,38 @@ class _HomePageState extends State<HomePage> {
               ),
               textAlign: TextAlign.center,
             ),
+          ),
+          Expanded(
+            child: FutureBuilder(
+                future: _getGifs(),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                    case ConnectionState.none:
+                      return Container(
+                        width: 200.0,
+                        height: 200.0,
+                        alignment: Alignment.topCenter,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.yellowAccent),
+                          strokeWidth: 5.0,
+                        ),
+                      );
+                    default:
+                      if (snapshot.hasError)
+                        return Container();
+                      else
+                        _createGifTable(context, snapshot);
+                  }
+                }),
           )
         ],
       ),
     );
   }
+}
+
+Widget _createGifTable (BuildContext context,AsyncSnapshot snapshot){
+
 }
