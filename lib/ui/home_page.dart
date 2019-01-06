@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:buscador_gifs/ui/gif_page.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -111,6 +112,11 @@ class _HomePageState extends State<HomePage> {
                 height: 300.0,
                 fit: BoxFit.cover,
               ),
+              onTap: (){
+                Navigator.push(
+                    context,
+                  MaterialPageRoute(builder: (context) => GifPage(snapshot.data["data"][index])));
+              },
             );
           } else {
             return Container(
@@ -129,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 ),
-                onTap: (){
+                onTap: () {
                   setState(() {
                     _offset += 19;
                   });
