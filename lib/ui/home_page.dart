@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -8,19 +8,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   String _search;
+  int _offset = 0;
 
-  _getGifs() async {
+  Future<Map> _getGifs() async {
     http.Response response;
 
-    if(_search == null)
-      response = await http.get("");
+    if (_search == null)
+      response = await http.get(
+          "https://api.giphy.com/v1/gifs/trending?api_key=IVDg5FxkHX3OEVJ7beIuoS1sHZdFSp98&limit=25&rating=G");
     else
-      response = await http.get("");
+      response = await http.get(
+          "https://api.giphy.com/v1/gifs/search?api_key=IVDg5FxkHX3OEVJ7beIuoS1sHZdFSp98&q=$_search&limit=25&offset=$_offset&rating=G&lang=pt");
 
+    return json.decode(response.body);
   }
-
 
   @override
   Widget build(BuildContext context) {
